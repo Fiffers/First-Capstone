@@ -10,7 +10,7 @@ $(document).ready(function() {
         allImageUrls: [],
         topTrackNames: [],
         topTracksYouTube: [],
-        numberOfResults: 20,
+        numberOfResults: 16,
         resubmit: 0
     };
 
