@@ -1,6 +1,6 @@
 $(document).ready(function() {
     $('#js-gears').hide()
-    //STATE OBJECT
+        //STATE OBJECT
     var state = {
         artistId: [],
         similarArtistId: [],
@@ -132,12 +132,11 @@ $(document).ready(function() {
             $(element).eq(n).remove()
             $(element).eq(i).html(`<div>${state.similarArtistNames[i]}<img class="artistImg" src="${state.similarArtistImages[i]}" height="500" width="500"></div>
                   </br>
-                                    </br>
                   <div class="listen">
                   </div>`)
             if (state.topTracksYouTube[i]) {
                 // console.log(i, state.numberOfResults - 1)
-                $('.listen').eq(i).html(`<span>Listen to Top Track</span></br><a href="https://www.youtube.com/watch?v=${state.topTracksYouTube[i]}">
+                $('.listen').eq(i).html(`<span>Listen to their biggest hit</span></br><a href="https://www.youtube.com/watch?v=${state.topTracksYouTube[i]}">
                                                           <img class="icons" src="images/yt-icon.png" alt="Watch top track on YouTube">
                                                        </a>`)
             }
@@ -156,6 +155,7 @@ $(document).ready(function() {
             state.resubmit++
                 console.log("ELSE")
             $('#js-gears').fadeOut(100)
+            $('.col-4').removeClass('hidden')
             $('#js-results-container').show(500)
         }
     }
