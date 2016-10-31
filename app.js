@@ -130,7 +130,7 @@ $(document).ready(function() {
         $(element).html('');
         for (var i = 0, n = i + state.numberOfResults; i < state.numberOfResults; i++) {
             $(element).eq(n).remove()
-            $(element).eq(i).html(`<div>${state.similarArtistNames[i]}<img class="artistImg" src="${state.similarArtistImages[i]}"></div>
+            $(element).eq(i).html(`<div>${state.similarArtistNames[i]}<img class="artistImg" src="${state.similarArtistImages[i]}" height="640" width="640"></div>
                   </br>
                   <span>Listen to Top Track</span>
                   </br>
