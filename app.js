@@ -110,7 +110,7 @@ $(document).ready(function() {
             // console.log(result)
             // for (var i = 0; i < 1; i++) {
             if (result.items.length === 0) {
-                state.topTracksYouTube.push()
+                state.topTracksYouTube.push('')
             } else {
                 // console.log(result)
                 state.topTracksYouTube.push(result.items[0].id.videoId)
@@ -130,13 +130,13 @@ $(document).ready(function() {
         $(element).html('');
         for (var i = 0, n = i + state.numberOfResults; i < state.numberOfResults; i++) {
             $(element).eq(n).remove()
-            $(element).eq(i).html(`<div>${state.similarArtistNames[i]}<img class="artistImg" src="${state.similarArtistImages[i]}" height="500" width="500"></div>
+            $(element).eq(i).html(`<div class="listen1">${state.similarArtistNames[i]}<img class="artistImg" src="${state.similarArtistImages[i]}" height="500" width="500"></div>
                   </br>
                   <div class="listen">
                   </div>`)
-            if (state.topTracksYouTube[i]) {
+            if (state.topTracksYouTube[i]!='') {
                 // console.log(i, state.numberOfResults - 1)
-                $('.listen').eq(i).html(`<span>Listen to their biggest hit</span></br><a href="https://www.youtube.com/watch?v=${state.topTracksYouTube[i]}">
+                $('.listen').eq(i).html(`<a href="https://www.youtube.com/watch?v=${state.topTracksYouTube[i]}">
                                                           <img class="icons" src="images/yt-icon.png" alt="Watch top track on YouTube">
                                                        </a>`)
             }
