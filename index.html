@@ -7,18 +7,30 @@
     <link rel="stylesheet" href="main.css" media="screen" title="no title">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="app.js"></script>
-
-    </script>
     <title>Similar Music</title>
   </head>
   <body>
     <div id="search-container">
       <form id="js-search-form" action="index.html" method="post">
-        <input type="search" name="name" placeholder="Search for similar music">
+        <input type="search" name="name" id="search-input" value="the neighbourhood">
         <button type="submit" id="js-submit-button" name="button">Search</button>
+        <!-- <button type="reset" name="button" onclick="this.form.reset()">Reset</button> -->
       </form>
     </div>
-    <div id="results-container">
+    <img id="js-gears" src="images/gears.gif" alt="" />
+    <div id="js-results-container">
+      <div class="col-4"></div>
+      <div class="col-4"></div>
+      <div class="col-4"></div>
+      <div class="col-4"></div>
+      <div class="col-4"></div>
+      <div class="col-4"></div>
+      <div class="col-4"></div>
+      <div class="col-4"></div>
+      <div class="col-4"></div>
+      <div class="col-4"></div>
+      <div class="col-4"></div>
+      <div class="col-4"></div>
     </div>
   </body>
 </html>

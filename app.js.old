@@ -1,0 +1,77 @@
+//STATE OBJECT
+var state = {
+        artistId: [],
+        similarArtistNames: [],
+        similarArtistSongs: [],
+        similarArtistImages: [],
+        allImageUrls: []
+    }
+
+//EVENT LISTENERS
+$(function() {
+    $('#js-search-form').submit(function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        getArtistId($('#search-input').val())
+    });
+});
+
+//FUNCTIONS THAT MODIFY STATE
+    //SPOTIFY API
+var getArtistId = function(q) {
+    state.artistId.length = 0
+    return $.get('https://api.spotify.com/v1/search', {
+        q: q,
+        type: "artist"
+    }).then(function(result) {
+        state.artistId.push(result.artists.items[0].id)
+        getSimilarArtists(state.artistId[0])
+    });;
+};
+var getSimilarArtists = function(id) {
+    state.similarArtistNames.length = 0
+    state.similarArtistImages.length = 0
+    return $.get('https://api.spotify.com/v1/artists/' + id + '/related-artists').then(function(result) {
+        result.artists.forEach(function(artists) {
+            state.similarArtistNames.push(artists.name)
+            getAlbumArtwork(artists.id)
+            //console.log (state.similarArtistImages)
+        });
+    })
+
+};
+
+var getAlbumArtwork = function(id){
+    return $.get('https://api.spotify.com/v1/artists/' + id + '/top-tracks',{
+        country: 'US'
+    }).then(function(result){
+        for (var i = 0; i < result.length ; i++){
+            console.log (i)
+        }
+        // result.tracks.forEach(function(result){
+        //     // state.similarArtistImages.push(result.album.images[0].url)
+        //     console.log (result.album)
+        // })
+        // console.log (result.tracks[0].album.images[0].url)
+        // state.similarArtistImages.push(result.tracks[0].album.images[0].url)
+        // result.tracks[0].album.images[0].url.forEach( function(path) { new Image().src=path } );
+    // }).then(function(){
+        // for (var i = 0; i < state.allImageUrls.length; i+3) {
+        //     state.similarArtistImages.push(state.allImageUrls[i])
+        // }
+            // displaySimilarArtistNames(state.similarArtistNames,state.similarArtistImages, $('#js-results-container'))
+        });
+};
+
+    //YOUTUBE API
+
+    //LYRICSWIKIA API
+
+//FUNCTIONS THAT RENDER STATE
+
+var displaySimilarArtistNames = function(names,images,element){
+    element.html('')
+    for (var i = 0; i < state.similarArtistNames.length ; i++){
+        element.append('<table class="col-4"><tr><td>' + state.similarArtistNames[i] + '<div class="img-container"><img class="artistImg" src="' + state.similarArtistImages[i] + '"></div></td></tr></table>')
+    }
+}
