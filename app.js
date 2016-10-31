@@ -130,15 +130,14 @@ $(document).ready(function() {
         $(element).html('');
         for (var i = 0, n = i + state.numberOfResults; i < state.numberOfResults; i++) {
             $(element).eq(n).remove()
-            $(element).eq(i).html(`<div>${state.similarArtistNames[i]}<img class="artistImg" src="${state.similarArtistImages[i]}" height="640" width="640"></div>
+            $(element).eq(i).html(`<div>${state.similarArtistNames[i]}<img class="artistImg" src="${state.similarArtistImages[i]}" height="500" width="500"></div>
                   </br>
-                  <span>Listen to Top Track</span>
-                  </br>
+                                    </br>
                   <div class="listen">
                   </div>`)
             if (state.topTracksYouTube[i]) {
                 // console.log(i, state.numberOfResults - 1)
-                $('.listen').eq(i).html(`<a href="https://www.youtube.com/watch?v=${state.topTracksYouTube[i]}">
+                $('.listen').eq(i).html(`<span>Listen to Top Track</span></br><a href="https://www.youtube.com/watch?v=${state.topTracksYouTube[i]}">
                                                           <img class="icons" src="images/yt-icon.png" alt="Watch top track on YouTube">
                                                        </a>`)
             }
