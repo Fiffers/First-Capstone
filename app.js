@@ -102,7 +102,7 @@ $(document).ready(function() {
             part: 'snippet',
             key: 'AIzaSyAs_Lal_n3-LakD3xnUmFqKRzhgJiiMifI',
             q: q + name,
-            // order: "viewCount",
+            order: "viewCount",
             type: 'video',
             // maxResults: 5,
             // category: '10'
