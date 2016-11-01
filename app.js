@@ -1,6 +1,7 @@
 $(document).ready(function() {
-    $('#js-gears').hide()
-        //STATE OBJECT
+    $('.js-gears').hide()
+
+    //STATE OBJECT
     var state = {
         artistId: [],
         similarArtistId: [],
@@ -10,22 +11,20 @@ $(document).ready(function() {
         allImageUrls: [],
         topTrackNames: [],
         topTracksYouTube: [],
+        previewUrl: [],
         numberOfResults: 16,
         resubmit: 0
     };
 
     //EVENT LISTENERS
-    $(function() {
-        $('#js-search-form').submit(function(e) {
-            e.preventDefault();
-            $('#js-gears').fadeIn(100)
-            $('#js-results-container').hide()
-                // $(":submit").attr("disabled", true);
-            resetState();
-            getArtistId($('#search-input').val());
-            console.log(state)
-
-        });
+    $('#js-search-form').submit(function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $('.no-results').html('')
+        $('.js-gears').removeClass('hidden').fadeIn(100)
+        $('.col-4').hide()
+        resetState();
+        getArtistId($('#search-input').val());
     });
 
     //FUNCTIONS THAT MODIFY STATE
@@ -38,7 +37,8 @@ $(document).ready(function() {
             state.allImageUrls = [];
             state.topTrackNames = [];
             state.topTracksYouTube = [];
-            state.resubmit = 0
+            state.previewUrl = [];
+            state.resubmit = 0;
         }
         //SPOTIFY API
     var getArtistId = function(q) {
@@ -47,26 +47,27 @@ $(document).ready(function() {
                 type: "artist"
             })
             .then(function(result) {
-                // console.log(result)
-                state.artistId.push(result.artists.items[0].id);
-                // console.log("State.artistId:",state.artistId.length)
-                if (state.artistId.length === 1) {
+                console.log(result.artists.items.length)
+                if (result.artists.items.length == 0) {
+                    console.log('if');
+                    noResults('.no-results');
+                } else if (result.artists.items.length >= 1) {
+                    console.log('else if')
+                    state.artistId.push(result.artists.items[0].id);
                     getSimilarArtists(state.artistId[0]);
-                    // console.log(state.artistId)
-                }
+
+                };
             });
     };
     var getSimilarArtists = function(id) {
+        console.log ('similarartists')
         return $.get('https://api.spotify.com/v1/artists/' + id + '/related-artists', {
             type: "artist",
         }).then(function(result) {
-            // console.log (result.artists)
-            // createDivs(state.numberOfResults)
+            // console.log(result)
             result.artists.forEach(function(artists) {
                 state.similarArtistId.push(artists.id);
-                // console.log("state.similarArtistId:",state.similarArtistId.length)
                 if (state.similarArtistId.length == state.numberOfResults) {
-                    // console.log ("Getting Artwork and Name!")
                     getArtworkAndName(state.similarArtistId);
                 }
             });
@@ -81,14 +82,13 @@ $(document).ready(function() {
                     popularity: '100'
                 })
                 .done(function(result) {
-                    // console.log(result)
                     state.similarArtistNames.push(result.tracks[0].artists[0].name)
                     state.similarArtistImages.push(result.tracks[0].album.images[0].url)
                     state.topTrackNames.push((result.tracks[0].name).replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, ""))
-                        // console.log (state.topTrackNames)
+                    state.previewUrl.push(result.tracks[0].preview_url)
                     if (state.similarArtistNames.length == state.numberOfResults) {
                         for (var i = 0; i < state.numberOfResults; i++) {
-                            getYoutubeSearch(state.topTrackNames[i], state.similarArtistNames[i], "music video");
+                            getYoutubeSearch(state.topTrackNames[i], state.similarArtistNames[i], '-cover');
                         }
                     }
                 });
@@ -97,66 +97,62 @@ $(document).ready(function() {
 
     //YOUTUBE API
     function getYoutubeSearch(q, name, musicVideo) {
-        // console.log ("FIRING")
         return $.get('https://www.googleapis.com/youtube/v3/search', {
             part: 'snippet',
             key: 'AIzaSyAs_Lal_n3-LakD3xnUmFqKRzhgJiiMifI',
             q: q + name,
-            order: "viewCount",
             type: 'video',
-            // maxResults: 5,
-            // category: '10'
         }).then(function(result) {
-            // console.log(result)
-            // for (var i = 0; i < 1; i++) {
             if (result.items.length === 0) {
                 state.topTracksYouTube.push('')
             } else {
-                // console.log(result)
                 state.topTracksYouTube.push(result.items[0].id.videoId)
             }
-            // }
-            // console.log (state.topTracksYouTube.length, state.numberOfResults)
-            // if (state.topTracksYouTube.length == state.numberOfResults-1) {
             displaySimilarArtistNames(('.col-4'), state.similarArtistNames)
-                // }
         })
     }
     //LYRICSWIKIA API
 
     //FUNCTIONS THAT RENDER STATE
     var displaySimilarArtistNames = function(element, names) {
-        // console.log ("RENDERING STATE")
         $(element).html('');
         for (var i = 0, n = i + state.numberOfResults; i < state.numberOfResults; i++) {
             $(element).eq(n).remove()
-            $(element).eq(i).html(`<div class="listen1">${state.similarArtistNames[i]}<img class="artistImg" src="${state.similarArtistImages[i]}" height="500" width="500"></div>
-                  </br>
-                  <div class="listen">
-                  </div>`)
-            if (state.topTracksYouTube[i]!='') {
-                // console.log(i, state.numberOfResults - 1)
-                $('.listen').eq(i).html(`<a href="https://www.youtube.com/watch?v=${state.topTracksYouTube[i]}">
-                                                          <img class="icons" src="images/yt-icon.png" alt="Watch top track on YouTube">
-                                                       </a>`)
+            $(element).eq(i).html(`
+                <div class="listen" style="background-image:url(${state.similarArtistImages[i]})">
+                    <h4 class="artist-name">${state.similarArtistNames[i]}</h4>
+                    <audio id="sound1" src="${state.previewUrl[i]}" preload="none"></audio>
+                    <button class="icons" onclick="document.getElementById('sound1').play();">
+                    <img class="icons" src="images/play-button.png" alt="Preview Track with Spotify">
+                    </button>
+                    </div>`)
+            if (state.topTracksYouTube[i] != '') {
+                $(element).eq(i).html(`
+                    <div class="listen" style="background-image:url(${state.similarArtistImages[i]})">
+                        <h4 class="artist-name">${state.similarArtistNames[i]}</h4>
+                        <a href="https://www.youtube.com/watch?v=${state.topTracksYouTube[i]}" target="_blank">
+                            <img class="icons" src="images/play-button.png" alt="Watch top track on YouTube">
+                        </a>
+                    </div>`)
             }
 
         }
         setTimeout(resubmitter, 1000)
     };
+    var noResults = function(element) {
+        $('.js-gears').fadeOut(100).addClass('hidden');
+        $('.no-results').html(`<h2>No results found.</h2>`)
+    }
 
     var resubmitter = function() {
-        // console.log (state)
         if (state.resubmit === 0) {
-            console.log("IF")
             $('#js-search-form').submit();
-            state.resubmit++
+            state.resubmit++;
         } else if (state.resubmit === 1) {
-            state.resubmit++
-                console.log("ELSE")
-            $('#js-gears').fadeOut(100)
-            $('.col-4').removeClass('hidden')
-            $('#js-results-container').show(500)
+            state.resubmit++;
+            $('.js-gears').fadeOut(100).addClass('hidden');
+            $('.col-4').removeClass('hidden').fadeIn(500);
+            // $('#js-results-container').show(500);
         }
     }
 

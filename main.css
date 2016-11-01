@@ -1,8 +1,7 @@
 html, body{
-  background: #cb2d3e; /* fallback for old browsers */
-  background: -webkit-linear-gradient(to left, #cb2d3e , #ef473a); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to left, #cb2d3e , #ef473a); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   margin: 0px;
+  background-color: #ececea;
+  font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
 }
 
 #search-container{
@@ -29,42 +28,54 @@ html, body{
   /*float: left;*/
   text-align: center;
   margin: 8px;
-  overflow: hidden;
-  border: 1px solid black;
-  border-radius: 5%;
-  width: 20%;
-  /*margin-bottom: -66px;*/
-  /*flex-grow: 1;*/
-  white-space: nowrap;
+  /*overflow: hidden;*/
+  border: 1px solid lightgrey;
+  /*border-radius: 5%;*/
+  width: 22%;
+  /*white-space: nowrap;*/
+  /*height: 100%;*/
+  /*padding-top: 20%;*/
+  /*box-shadow: 0 0 10px #ccc;*/
 }
 
-#js-gears{
+.col-4:hover{
+    box-shadow: 0 0 10px #ccc;
+}
+
+.js-gears{
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
 
-.listen, .listen1{
-  position: relative;
-  align-self: flex-start;;
-  background: rgba(255, 255, 255, 0.75);;
+.listen{
+  height: 100%;
+  background-position: center;
+  background-size: cover;
 }
 
-.artistImg{
-  display: block;
+.artist-name{
+  background: rgba(255, 255, 255, 0.8);
+  margin-top: -3%;
+  font-weight: light;
+  /*background-color: transparent;*/
+}
+
+.no-results {
   width: 100%;
-  height:100%;
-  /*margin-bottom: -66px;*/
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: -20px;
-  max-height: 50%;
-  overflow: hidden;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
+  text-align: center;
 }
+
 .icons{
-  height: 20px;
+  /*position: relative;*/
+  /*top: -575px;*/
+  width: 100%;
+  opacity: .1;
+  justify-content: center;
+}
+
+.listen:hover .icons, .liste:hover .icons{
+  opacity: .5;
 }
 
 .col-4::before,
