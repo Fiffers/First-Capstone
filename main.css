@@ -81,6 +81,9 @@ html, body{
   .col-4 {
     width: 100%;
   }
+  .icons{
+    opacity: .5
+  }
 }
 .hidden{
   display:none;
