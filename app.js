@@ -38,6 +38,7 @@ $(document).ready(function() {
             state.topTrackNames = [];
             state.topTracksYouTube = [];
             state.previewUrl = [];
+            // state.numberOfResults = 0;
             state.resubmit = 0;
         }
         //SPOTIFY API
@@ -47,12 +48,12 @@ $(document).ready(function() {
                 type: "artist"
             })
             .then(function(result) {
-                console.log(result.artists.items.length)
+                // console.log(result.artists.items.length)
                 if (result.artists.items.length == 0) {
-                    console.log('if');
+                    // console.log('if');
                     noResults('.no-results');
                 } else if (result.artists.items.length >= 1) {
-                    console.log('else if')
+                    // console.log('else if')
                     state.artistId.push(result.artists.items[0].id);
                     getSimilarArtists(state.artistId[0]);
 
@@ -60,11 +61,12 @@ $(document).ready(function() {
             });
     };
     var getSimilarArtists = function(id) {
-        console.log ('similarartists')
+        // console.log('similarartists')
         return $.get('https://api.spotify.com/v1/artists/' + id + '/related-artists', {
             type: "artist",
+            limit: '16'
         }).then(function(result) {
-            // console.log(result)
+            // state.numberOfResults = result.artists.length
             result.artists.forEach(function(artists) {
                 state.similarArtistId.push(artists.id);
                 if (state.similarArtistId.length == state.numberOfResults) {
@@ -82,14 +84,21 @@ $(document).ready(function() {
                     popularity: '100'
                 })
                 .done(function(result) {
-                    state.similarArtistNames.push(result.tracks[0].artists[0].name)
-                    state.similarArtistImages.push(result.tracks[0].album.images[0].url)
-                    state.topTrackNames.push((result.tracks[0].name).replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, ""))
-                    state.previewUrl.push(result.tracks[0].preview_url)
-                    if (state.similarArtistNames.length == state.numberOfResults) {
-                        for (var i = 0; i < state.numberOfResults; i++) {
-                            getYoutubeSearch(state.topTrackNames[i], state.similarArtistNames[i], '-cover');
+                    // console.log ("GETTING ARTWORK AND NAME")
+                    if (result.tracks[0] != null) {
+                        state.similarArtistNames.push(result.tracks[0].artists[0].name)
+                        console.log (state.similarArtistNames.length)
+                        state.similarArtistImages.push(result.tracks[0].album.images[0].url)
+                        state.topTrackNames.push((result.tracks[0].name).replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, ""))
+                        state.previewUrl.push(result.tracks[0].preview_url)
+                        if (state.similarArtistNames.length == state.numberOfResults) {
+                            for (var i = 0; i < state.numberOfResults; i++) {
+                                getYoutubeSearch(state.topTrackNames[i], state.similarArtistNames[i], '-cover');
+                            }
                         }
+                    }
+                    else if (result.tracks[0] == null){
+                        noResults('.no-results');
                     }
                 });
         })
@@ -97,6 +106,7 @@ $(document).ready(function() {
 
     //YOUTUBE API
     function getYoutubeSearch(q, name, musicVideo) {
+        // console.log ("GETTING YT SEARCH")
         return $.get('https://www.googleapis.com/youtube/v3/search', {
             part: 'snippet',
             key: 'AIzaSyAs_Lal_n3-LakD3xnUmFqKRzhgJiiMifI',
@@ -141,7 +151,7 @@ $(document).ready(function() {
     };
     var noResults = function(element) {
         $('.js-gears').fadeOut(100).addClass('hidden');
-        $('.no-results').html(`<h2>No results found.</h2>`)
+        $('.no-results').html(`<h2>No results found. You either spelled it incorrectly or the artist is too obscure to get reliable results.</h2>`)
     }
 
     var resubmitter = function() {
@@ -152,7 +162,6 @@ $(document).ready(function() {
             state.resubmit++;
             $('.js-gears').fadeOut(100).addClass('hidden');
             $('.col-4').removeClass('hidden').fadeIn(500);
-            // $('#js-results-container').show(500);
         }
     }
 
