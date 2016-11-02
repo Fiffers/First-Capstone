@@ -23,9 +23,11 @@ html, body{
 }
 .col-4{
   text-align: center;
-  margin: 8px;
+  margin: 10px;
   border: 1px solid lightgrey;
   width: 22%;
+  overflow: hidden;
+  /*padding: -8px;*/
 }
 
 .col-4:hover{
@@ -46,8 +48,9 @@ html, body{
 
 .artist-name{
   background: rgba(255, 255, 255, 0.8);
-  margin-top: -3%;
+  margin-top: -.5%;
   font-weight: light;
+  /*height: 33%;*/
   /*background-color: transparent;*/
 }
 

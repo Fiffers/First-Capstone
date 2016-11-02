@@ -130,7 +130,7 @@ $(document).ready(function() {
             $(element).eq(n).remove()
             $(element).eq(i).html(`
                 <div class="listen" style="background-image:url(${state.similarArtistImages[i]})">
-                    <h4 class="artist-name">${state.similarArtistNames[i]}</h4>
+                    <p class="artist-name">${state.similarArtistNames[i]}</p>
                     <audio id="sound1" src="${state.previewUrl[i]}" preload="none"></audio>
                     <button class="icons" onclick="document.getElementById('sound1').play();">
                     <img class="icons" src="images/play-button.png" alt="Preview Track with Spotify">
@@ -139,7 +139,7 @@ $(document).ready(function() {
             if (state.topTracksYouTube[i] != '') {
                 $(element).eq(i).html(`
                     <div class="listen" style="background-image:url(${state.similarArtistImages[i]})">
-                        <h4 class="artist-name">${state.similarArtistNames[i]}</h4>
+                        <p class="artist-name">${state.similarArtistNames[i]}</p></br>
                         <a href="https://www.youtube.com/watch?v=${state.topTracksYouTube[i]}" target="_blank">
                             <img class="icons" src="images/play-button.png" alt="Watch top track on YouTube">
                         </a>
