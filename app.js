@@ -6,7 +6,6 @@ $(document).ready(function() {
         artistId: [],
         similarArtistId: [],
         similarArtistNames: [],
-        similarArtistSongs: [],
         similarArtistImages: [],
         allImageUrls: [],
         topTrackNames: [],
@@ -32,7 +31,6 @@ $(document).ready(function() {
             state.artistId = [];
             state.similarArtistId = [];
             state.similarArtistNames = [];
-            state.similarArtistSongs = [];
             state.similarArtistImages = [];
             state.allImageUrls = [];
             state.topTrackNames = [];
@@ -130,7 +128,8 @@ $(document).ready(function() {
             $(element).eq(n).remove()
             $(element).eq(i).html(`
                 <div class="listen" style="background-image:url(${state.similarArtistImages[i]})">
-                    <p class="artist-name">${state.similarArtistNames[i]}</p>
+                    <p class="artist-name"><b>${state.similarArtistNames[i]}</b></br>
+                    ${state.topTrackNames[i]}</p>
                     <audio id="sound1" src="${state.previewUrl[i]}" preload="none"></audio>
                     <button class="icons" onclick="document.getElementById('sound1').play();">
                     <img class="icons" src="images/play-button.png" alt="Preview Track with Spotify">
@@ -139,7 +138,8 @@ $(document).ready(function() {
             if (state.topTracksYouTube[i] != '') {
                 $(element).eq(i).html(`
                     <div class="listen" style="background-image:url(${state.similarArtistImages[i]})">
-                        <p class="artist-name">${state.similarArtistNames[i]}</p></br>
+                        <p class="artist-name"><b>${state.similarArtistNames[i]}</b></br>
+                        ${state.topTrackNames[i]}</p>
                         <a href="https://www.youtube.com/watch?v=${state.topTracksYouTube[i]}" target="_blank">
                             <img class="icons" src="images/play-button.png" alt="Watch top track on YouTube">
                         </a>
