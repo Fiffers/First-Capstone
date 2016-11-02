@@ -46,6 +46,11 @@ html, body{
   background-size: cover;
 }
 
+.buttonbg{
+  background: rgba(255, 0, 0, 0);
+  border: 0px;
+}
+
 .artist-name{
   background: rgba(255, 255, 255, 0.8);
   margin-top: -.5%;

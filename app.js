@@ -131,8 +131,8 @@ $(document).ready(function() {
                     <p class="artist-name"><b>${state.similarArtistNames[i]}</b></br>
                     ${state.topTrackNames[i]}</p>
                     <audio id="sound1" src="${state.previewUrl[i]}" preload="none"></audio>
-                    <button class="icons" onclick="document.getElementById('sound1').play();">
-                    <img class="icons" src="images/play-button.png" alt="Preview Track with Spotify">
+                    <button class="icons buttonbg" onclick="document.getElementById('sound1').play();">
+                    <img class="icons" src="images/play-button.png" alt="Preview Track with Spotify">Spotify Sample
                     </button>
                     </div>`)
             if (state.topTracksYouTube[i] != '') {
