@@ -49,6 +49,7 @@ html, body{
 .buttonbg{
   background: rgba(255, 0, 0, 0);
   border: 0px;
+  cursor:pointer;
 }
 
 .artist-name{
