@@ -84,6 +84,10 @@ html, body{
   content: '';
 }
 
+#top{
+  vertical-align: middle;
+}
+
 .col-4::after {
   clear: both;
 }

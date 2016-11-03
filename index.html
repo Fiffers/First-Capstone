@@ -4,16 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="main.css" media="screen" title="no title">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="app.js"></script>
     <title>Similar Music</title>
   </head>
   <body>
     <div id="search-container">
-      <h1>Find artists similar to the one you search for and listen to their top track</h1>
-      <form id="js-search-form" action="index.html" method="post">
-        <input type="search" name="name" id="search-input" placeholder="Search for similar artists">
-        <button type="submit" id="js-submit-button" name="button">Search</button>
+      <h1>Type a band or artist name and recieve a list of other bands that are similar in style</h1>
+      <form class="pure-form" id="js-search-form" action="index.html" method="post">
+        <span id="top">Find artists similar to: </span><input type="search" name="name" id="search-input" placeholder="The Beatles">
+        <button type="submit" class="pure-button pure-button-primary" id="js-submit-button" name="button">Search</button>
       </form>
     </div>
     <img class="js-gears hidden" src="images/gears.gif" alt="Loading" />
